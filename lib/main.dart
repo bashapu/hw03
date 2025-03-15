@@ -20,16 +20,15 @@ class MemoryGame extends StatelessWidget {
 class GameScreen extends StatefulWidget {
   @override
   _GameScreenState createState() => _GameScreenState();
+}
 
+class _GameScreenState extends State<GameScreen> {
+  List<bool> flippedCards = List.generate(16, (_) => false);
   List<CardModel> cards = List.generate(8, (index) {
     return CardModel(imagePath: 'assets/image$index.png');
   })..addAll(List.generate(8, (index) {
     return CardModel(imagePath: 'assets/image$index.png');
   }));
-}
-
-class _GameScreenState extends State<GameScreen> {
-  List<bool> flippedCards = List.generate(16, (_) => false);
 
   @override
   Widget build(BuildContext context) {
@@ -52,10 +51,17 @@ class _GameScreenState extends State<GameScreen> {
                   flippedCards[index] = !flippedCards[index];
                 });
               },
-              child: Container(
-                color: flippedCards[index] ? Colors.blue : Colors.grey,
-                child: const Center(child: Text("Card")),
-              ),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                decoration: BoxDecoration(
+                  color: cards[index].isFaceUp ? Colors.white : Colors.blue,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child:
+                    cards[index].isFaceUp
+                        ? Image.asset(cards[index].imagePath)
+                        : const Center(child: Text("Tap")),
+              )
             );
           },
         ),

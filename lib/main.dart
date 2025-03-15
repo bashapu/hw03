@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'card_model.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MemoryGame());
@@ -24,6 +25,8 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   int score = 0;
+  int seconds = 0;
+  Timer? gameTimer;
   List<bool> flippedCards = List.generate(16, (_) => false);
   List<CardModel> cards = List.generate(8, (index) {
     return CardModel(imagePath: 'assets/image$index.png');
@@ -45,6 +48,14 @@ class _GameScreenState extends State<GameScreen> {
       });
       score -= 5;
     }
+  }
+
+  void _startTimer() {
+    gameTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        seconds++;
+      });
+    });
   }
 
   @override

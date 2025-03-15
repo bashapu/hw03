@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'card_model.dart';
 
 void main() {
   runApp(const MemoryGame());
@@ -19,6 +20,12 @@ class MemoryGame extends StatelessWidget {
 class GameScreen extends StatefulWidget {
   @override
   _GameScreenState createState() => _GameScreenState();
+
+  List<CardModel> cards = List.generate(8, (index) {
+    return CardModel(imagePath: 'assets/image$index.png');
+  })..addAll(List.generate(8, (index) {
+    return CardModel(imagePath: 'assets/image$index.png');
+  }));
 }
 
 class _GameScreenState extends State<GameScreen> {

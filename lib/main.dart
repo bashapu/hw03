@@ -59,26 +59,40 @@ class _GameScreenState extends State<GameScreen> {
   }
 
   void _checkWin() {
-  if (cards.every((card) => card.isMatched)) {
-    gameTimer?.cancel();
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("You Win!"),
-        content: Text("Time: $seconds seconds, Score: $score"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _restartGame();
-            },
-            child: const Text("Restart"),
-          ),
-        ],
-      ),
-    );
+    if (cards.every((card) => card.isMatched)) {
+      gameTimer?.cancel();
+      showDialog(
+        context: context,
+        builder:
+            (_) => AlertDialog(
+              title: const Text("You Win!"),
+              content: Text("Time: $seconds seconds, Score: $score"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _restartGame();
+                  },
+                  child: const Text("Restart"),
+                ),
+              ],
+            ),
+      );
+    }
   }
-}
+
+  void _restartGame() {
+    setState(() {
+      cards.shuffle();
+      for (var card in cards) {
+        card.isFaceUp = false;
+        card.isMatched = false;
+      }
+      score = 0;
+      seconds = 0;
+      _startTimer();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -30,6 +30,20 @@ class _GameScreenState extends State<GameScreen> {
     return CardModel(imagePath: 'assets/image$index.png');
   }));
 
+  void _checkMatch(int firstIndex, int secondIndex) {
+  if (cards[firstIndex].imagePath == cards[secondIndex].imagePath) {
+    cards[firstIndex].isMatched = true;
+    cards[secondIndex].isMatched = true;
+  } else {
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        cards[firstIndex].isFaceUp = false;
+        cards[secondIndex].isFaceUp = false;
+      });
+    });
+  }
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

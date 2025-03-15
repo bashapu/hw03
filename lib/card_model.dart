@@ -1,11 +1,6 @@
 class CardModel {
-  String imagePath;
-  bool isFaceUp;
-  bool isMatched;
-
-  CardModel({
-    required this.imagePath,
-    this.isFaceUp = false,
-    this.isMatched = false,
-  });
+  final String imagePath;
+  bool isFlipped = false;
+  bool isMatched = false;
+  CardModel({required this.imagePath});
 }

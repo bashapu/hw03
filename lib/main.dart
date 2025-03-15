@@ -23,6 +23,7 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  int score = 0;
   List<bool> flippedCards = List.generate(16, (_) => false);
   List<CardModel> cards = List.generate(8, (index) {
     return CardModel(imagePath: 'assets/image$index.png');
@@ -31,18 +32,20 @@ class _GameScreenState extends State<GameScreen> {
   }));
 
   void _checkMatch(int firstIndex, int secondIndex) {
-  if (cards[firstIndex].imagePath == cards[secondIndex].imagePath) {
-    cards[firstIndex].isMatched = true;
-    cards[secondIndex].isMatched = true;
-  } else {
-    Future.delayed(const Duration(seconds: 1), () {
-      setState(() {
-        cards[firstIndex].isFaceUp = false;
-        cards[secondIndex].isFaceUp = false;
+    if (cards[firstIndex].imagePath == cards[secondIndex].imagePath) {
+      cards[firstIndex].isMatched = true;
+      cards[secondIndex].isMatched = true;
+      score += 10;
+    } else {
+      Future.delayed(const Duration(seconds: 1), () {
+        setState(() {
+          cards[firstIndex].isFaceUp = false;
+          cards[secondIndex].isFaceUp = false;
+        });
       });
-    });
+      score -= 5;
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
